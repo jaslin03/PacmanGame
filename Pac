@@ -1,0 +1,219 @@
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.security.PublicKey;
+
+import javax.swing.Timer;
+
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.events.MouseEvent;
+import org.w3c.dom.views.AbstractView;
+
+public class Game extends JFrame implements KeyListener,ActionListener{
+	
+	JLabel label;
+	ImageIcon icon;
+
+
+	private int Width, Height;
+	private int pacmanUnit = 20;
+	public int[] pacX = {30};
+	public int[] pacY = {30};
+	private int dotEaten = 0;
+	Timer timer;
+	
+	
+	
+	 Game() {
+	
+	  timer = new Timer(1000, this);
+	  
+	  Width = 750;
+	  Height = 710;
+	  JComponent component = new Maze();
+      icon = new ImageIcon("pacman.png");
+      label = new JLabel();
+      label.setBounds(30, 30, pacmanUnit,pacmanUnit);
+      label.setIcon(icon);  
+    
+
+      this.setSize(Width, Height);
+      this.setTitle("Pacman");
+      this.setLocationRelativeTo(null);
+      this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      this.setResizable(false);
+      this.getContentPane().setBackground(Color.black);
+      this.addKeyListener(this);
+      this.add(label);
+      this.add(component);
+      
+      timer.start();
+      this.setVisible(true);
+      showDotEaten();
+	}
+
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+		
+		switch(e.getKeyChar()) {
+			case 'a': label.setLocation(label.getX()-10, label.getY());
+				break;
+			case 'w': label.setLocation(label.getX(), label.getY()-10);
+				break;
+			case 's': label.setLocation(label.getX(), label.getY()+10);
+				break;
+			case 'd': label.setLocation(label.getX()+10, label.getY());
+		
+		}
+	}
+
+
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+		switch(e.getKeyCode()) {
+		
+		case 37: if (pacX[0]>30) {
+			label.setLocation(label.getX()-8, label.getY());
+			pacX[0] -= 8;
+			System.out.println("("+ pacX[0]+ ", "+pacY[0]+")");
+			showDotEaten();
+		}	
+		break;
+			
+		case 38: if (pacY[0]>30) {
+			label.setLocation(label.getX(), label.getY()-8);
+			pacY[0] -= 8;
+			System.out.println("("+ pacX[0]+ ", "+pacY[0]+")");
+			showDotEaten();
+		}
+		break;
+		case 39: if (pacX[0]<Width-60) {
+			
+			label.setLocation(label.getX()+8, label.getY());
+			pacX[0] += 8;
+			System.out.println("("+ pacX[0]+ ", "+pacY[0]+")");
+			showDotEaten();
+			
+		}
+		break;
+		
+		case 40:  if (pacY[0]<Height-80) {
+			label.setLocation(label.getX(), label.getY()+8);
+			pacY[0] += 8;
+			System.out.println("("+ pacX[0]+ ", "+pacY[0]+")");
+			showDotEaten();
+			
+		}
+			
+}
+	
+		
+	}
+	public void showDotEaten() {
+		if (pacX[0]==38 && pacY[0]==38) {
+			dotEaten ++;
+			System.out.println(dotEaten);
+		}
+	}
+	
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	
+	public void actionPerformed(ActionEvent e) {
+		
+		
+	}
+
+
+
+	
+
+
+	
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+
+public class Pacman implements KeyListener{
+	
+	public int pacX = 30;
+	public int pacY = 30;
+	
+	public void moveR() {
+		
+		pacX+=10;
+
+	}
+	public void moveL() {
+			
+		pacX-=10;
+	
+		}
+	public void moveU() {
+		pacY+=10;
+	}
+		
+	public void moveD() {
+		pacY -=10;
+	}
+	
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+}
+
+
+
+
+	
+
+
+
+}
