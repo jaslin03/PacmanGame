@@ -1,0 +1,192 @@
+package com.usf.cs112.pacman;
+import java.awt.Color;
+import java.util.ArrayList;
+
+import java.awt.Graphics;
+import javax.swing.JComponent;
+
+
+public class Maze extends JComponent{
+	
+	ArrayList<Integer> x_array= new ArrayList<>();  //array of dots in x coordinate
+	ArrayList<Integer> y_array= new ArrayList<>();  // array of dots in y coordinate
+	ArrayList<Integer> x_array2= new ArrayList<>();
+	ArrayList<Integer> y_array2= new ArrayList<>();
+	Ghost ghost = new Ghost();  //Creating object of ghost
+	public boolean drawLevel1 = true;  //true when pacman is in first level
+
+
+	
+	
+	public Maze() {   //setting arraylist
+		
+		for (int i=0;i<dot_X.length;i++) {
+			x_array.add(dot_X[i]);
+			y_array.add(dot_Y[i]);
+			x_array2.add(dot_X[i]);
+			y_array2.add(dot_Y[i]);
+			
+		}
+		
+	
+
+	}
+	
+	private int[][] barrier = {  //coordinate, width and height of barriers. 
+			{0, 0, 750, 30},
+			{0, 0, 30, 710},
+			{0, 660, 750, 20},
+			{720, 0, 30, 750},		
+			{60, 60, 630, 30},
+			{60, 600, 630, 30},
+			{0, 0, 30, 30},
+			{720, 0, 30, 30},
+			{0, 660, 30, 30},
+			{720, 660, 30, 30},
+			{60, 130, 285, 250},
+			{390, 130, 300, 250},
+			{60, 405,285,165},
+			{390, 405,300,165}
+	};
+	
+	private int[] dot_X =   //All the Xcoordinate of dots.
+		{
+		    30, 60, 90, 120, 
+		    150, 180, 210, 240, 270,
+		    300, 330, 360, 390, 420,
+			450, 480, 510, 540, 570,
+			600, 630, 660, 690, // 23
+			
+			45, 45, 45, 45, 45,
+			45, 45, 45, 45, 45, 45, //11
+			
+			75, 105, 135, 165, 195,
+			225, 255, 285, 315, 
+			345, 375, 405, 435, 
+			465, 495, 525, 555, 
+			585, 615, 645, 675, //21
+			
+			700, 700, 700, 700, 700,
+			700, 700, 700, 700, 700, //10
+			
+			60, 90, 120, 
+		    150, 180, 210, 240, 270,
+		    300, 330, 360, 390, 420,
+			450, 480, 510, 540, 570,
+			600, 630, 660, 690, //22
+			
+			363, 363, 363, 363,
+			363, 363, 363, 363,
+			363, 363, 363, 363,
+			363, 363, 363, //15
+			
+			95,185, 275, 455,
+			545, 635, //6
+			
+			95,185, 275, 455,
+			545, 635//6
+			
+		};
+					
+	
+	private int[] dot_Y =    //All the Ycoordinate of dots.
+		{
+		40, 40, 40, 40, 
+		40, 40, 40, 40, 40, 
+		40, 40, 40, 40, 40,
+		40, 40, 40, 40, 40,
+		40, 40, 40, 40, //23
+		
+		60, 120, 180, 240, 300,
+		360, 420, 480, 540, 600, 642,//11
+		
+		109, 109, 109, 109, 109, 109,
+		109, 109, 109, 109, 109,
+		109, 109, 109, 109, 109,
+		109, 109, 109, 109, 109, //21
+		
+		60, 120, 180, 240, 300,
+		360, 420, 480, 540, 600, //10
+		
+		642, 642, 642, 642, 642, 
+		642, 642, 642, 642, 642, 
+		642, 642, 642, 642, 642,
+		642, 642, 642, 642, 642,
+		642, 642,  //22
+		
+		140,170, 200, 230,
+		260, 290, 320, 350, 
+		380, 410, 440, 470,
+		500, 530,560,//15
+		
+	    390, 390, 390, 390, 390,
+	    390, //6
+	    
+	    579, 579,579, 579,
+	    579, 579 //7
+		
+		
+		// total dots: 114
+		};
+	
+	
+   public void paintComponent(Graphics g)
+   
+   {  
+	   
+	  g.setColor(Color.white);  //setting the field's color
+	 
+	  for (int i=0;i<barrier.length;i++) {
+		  
+		  if (i<4) {
+		  g.drawRect(barrier[i][0], barrier[i][1], barrier[i][2], barrier[i][3]);
+		  
+		  }else if(i<10) { 
+			  
+		  g.fillRect(barrier[i][0], barrier[i][1], barrier[i][2], barrier[i][3]);
+		  }else {
+			  
+			  g.drawRect(barrier[i][0], barrier[i][1], barrier[i][2], barrier[i][3]);
+		  }
+	  }
+		
+	  drawDot(g);
+	  drawGhost(g);
+
+	 
+      
+   }
+   
+   public void drawDot(Graphics g) {  //Drawing all the dots
+	   
+		 g.setColor(Color.yellow);
+		
+		 if (drawLevel1 == true)  //Draw dots using first arraylist
+			 for (int i=0;i<x_array.size();i++) {
+				 g.fillOval(x_array.get(i), y_array.get(i), 5, 5);
+		 }else {  // If pacman moves to next level draw dots with second arratlist
+			 for (int i=0;i<x_array2.size();i++) {
+				 g.fillOval(x_array2.get(i), y_array2.get(i), 5, 5);
+			 }
+		 }
+		 
+		
+		
+	}
+   public void drawGhost(Graphics g) {
+		g.setColor(Color.pink);  //Drawing ghost 
+		g.fillOval(ghost.gCoordX, ghost.gCoordY, ghost.ghostSize, ghost.ghostSize); // first ghost
+		
+		g.setColor(Color.green);
+	    g.fillOval(ghost.g2XPosition, ghost.g2YPosition, ghost.ghostSize, ghost.ghostSize);
+	    g.setColor(Color.magenta);
+	    g.fillOval(ghost.g3XPosition, ghost.g3YPosition, ghost.ghostSize+8, ghost.ghostSize+8);
+   }
+
+
+
+}
+
+// document bugs.. 
+
+// submit design (classes and stuff)
