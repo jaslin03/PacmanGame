@@ -1,0 +1,32 @@
+package com.usf.cs112.pacman;
+
+public class Dot {
+	
+
+	public int score;
+
+	
+	public void addScore() {
+		score++;
+	}
+	public int getScore() {
+		return score;
+	}
+
+	public boolean gameOver() {
+			
+		if (score==114) {
+			System.out.println("Congradulations, you win!");  //When pacman wins
+			score ++;  //Adding score to prevent it keeps printing congratulations
+			return true;
+		}
+		else if (score < 114) {
+		    return false;  
+		}if (score == 115) {  //if score is 115 moves to next level. 114 + one extra score
+			return false;
+		}else {
+			return false;
+		}
+	}	
+	
+}
