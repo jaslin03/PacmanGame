@@ -1,0 +1,54 @@
+package com.usf.cs112.pacman;
+
+import javax.swing.JComponent;
+
+
+public class Ghost extends JComponent {
+	
+	public int gVelocityX = 1;
+	public int gVelocityY = 1;
+	public int ghostSize = 20;
+	public int gCoordX = 350; //first ghost's coordinate
+	public int gCoordY = 35;
+	public int g2XPosition = 350;  //Second ghost's coordinate
+	public int g2YPosition = 632;
+	public int g3XPosition = 356;  //Thirds ghost's coordinate
+	public int g3YPosition = 380;
+	public boolean level1 = true;  //setting level one as default
+
+	 
+	
+
+	
+	public void chase() {  //Let the ghost move
+		
+		gCoordX += gVelocityX;
+		g2XPosition += gVelocityX;
+		g3YPosition += gVelocityY;
+		
+		if (level1==true) {
+			if (gCoordX == 700) {  //setting the bounds for ghosts in first level
+				gVelocityX = -1;
+			}else if (gCoordX == 30) {
+				gVelocityX = 1;
+			}if (g3YPosition == 93) {
+				 gVelocityY = 1;
+			}else if (g3YPosition == 576) {
+				gVelocityY = -1;
+			}
+		}else {
+			if (gCoordX >= 697&& gCoordX<=700) {  //Setting the bounds for ghosts in level two
+				gVelocityX = -2;
+			}else if (gCoordX >= 30 && gCoordX<= 33) {  //They move twice as fast in second level but apcman remains the same.
+				gVelocityX = 2;
+			}if (g3YPosition >= 90&&g3YPosition<=93) {
+				gVelocityY = 2;
+			}else if (g3YPosition>= 573 && g3YPosition<= 576) {
+				gVelocityY = -2;
+			}
+		}
+	}
+	
+
+
+}
